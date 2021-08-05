@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <p>Simple Todo List</p>
-    </div>
-  );
+const App: React.FunctionComponent<unknown> = () => {
+	return (
+		<div className="App">
+			<p>Simple Todo List</p>
+		</div>
+	)
 }
 
-export default App;
+export default App

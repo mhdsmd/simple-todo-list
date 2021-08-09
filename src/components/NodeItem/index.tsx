@@ -3,10 +3,10 @@ import { NodeType } from '../../interfaces'
 
 type NodeItemProps = {
     item: NodeType
+	onChange: (value: string) => void;
 }
 
 const NodeList: React.FunctionComponent<NodeItemProps> = (props: NodeItemProps) => {
-	const [value, setValue] = React.useState<string>(props.item.title)
 
 	return (
 		<div className={'flex items-center text-gray-700'}>
@@ -15,7 +15,7 @@ const NodeList: React.FunctionComponent<NodeItemProps> = (props: NodeItemProps) 
 
 			{/* Node title */}
 			<span className={'text-base w-full'}>
-				<input className={'w-full nodeInput'} value={value} onChange={e => setValue(e.target.value)} />
+				<input className={'w-full nodeInput'} value={props.item.title} onChange={e => props.onChange(e.target.value)} />
 			</span>
 		</div>
 	)

@@ -3,7 +3,8 @@ import NodeItem from '../NodeItem'
 import { NodeListType } from '../../interfaces'
 
 type NodeListProps = {
-    data: NodeListType
+    data: NodeListType;
+	onChange: (value: string, id: string | number) => void;
 }
 
 const NodeList: React.FunctionComponent<NodeListProps> = (props: NodeListProps) => {
@@ -11,7 +12,7 @@ const NodeList: React.FunctionComponent<NodeListProps> = (props: NodeListProps) 
 		<>
 			{props.data.map((item) => (
 				<div key={item.id} className={'p-2'}>
-					<NodeItem item={item}/>
+					<NodeItem item={item} onChange={(v) => props.onChange(v, item.id)} />
 				</div>
 			))}
 		</>

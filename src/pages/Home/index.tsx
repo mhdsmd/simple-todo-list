@@ -66,7 +66,7 @@ const App: React.FunctionComponent<unknown> = () => {
 		} else if (action === 'DeleteNode') {
 			if (idx === 0 && modifiedNodeList.length > 0)
 				nodeListRef.current.focusOnNode(0)
-			else
+			if (idx > 0)
 				nodeListRef.current.focusOnNode(idx - 1)
 
 		}

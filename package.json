@@ -2,6 +2,11 @@
   "name": "simple-todo-list",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "email": "samadani.mahdi@gmail.com",
+    "name": "Mahdi Samadani"
+  },
+  "homepage": "https://github.com/mhdsmd/simple-todo-list",
   "dependencies": {
     "@craco/craco": "^6.2.0",
     "@testing-library/jest-dom": "^5.11.4",

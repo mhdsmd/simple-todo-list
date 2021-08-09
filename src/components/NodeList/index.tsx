@@ -21,7 +21,8 @@ const NodeList = React.forwardRef((props: NodeListProps, ref: React.Ref<any>) =>
 	// ref: https://reactjs.org/docs/hooks-reference.html#useimperativehandle
 	React.useImperativeHandle(ref, () => ({
 		focusOnNode: (index: number) => {
-			elRefs.current[index].current.focus()
+			if (elRefs && Object.keys(elRefs) && elRefs.current[index])
+				elRefs.current[index].current.focus()
 		}
 	}))
 

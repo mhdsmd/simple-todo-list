@@ -1,4 +1,4 @@
-import {NodeListType} from '../interfaces'
+import {NodeListType, NodeType} from '../interfaces'
 
 export const modifyNodeWithId = (id: string | number, value: string, nodeList: NodeListType): NodeListType => {
 	const _nodeList = [...nodeList]
@@ -33,4 +33,24 @@ export const storeNodeListToLocalStorage = (nodeList: NodeListType): boolean => 
 
 export const generateId = (): string => {
 	return Math.random().toString(36).substr(2, 9)
+}
+
+export const insertNodeToNodeList = (arr: NodeType[], value: NodeType, idx: number): NodeType[] => {
+	// Insert new node
+	if (idx === arr.length) {
+		const _arr = [...arr]
+		_arr.push(value)
+		return _arr
+	}
+	// Insert node in specific index
+	return arr.reduce((result: NodeType[], element: NodeType, index: number) => {
+
+		result.push(element)
+
+		if (index === idx) {
+			result.push(value)
+		}
+
+		return result
+	}, [])
 }

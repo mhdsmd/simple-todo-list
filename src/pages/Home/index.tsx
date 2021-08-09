@@ -1,11 +1,13 @@
 import React from 'react'
 import NodeList from '../../components/NodeList'
 import { NodeListExample } from '../../mock'
-import { NodeListType } from '../../interfaces'
+import {NodeListType} from '../../interfaces'
 import { modifyNodeWithId,
 	storeNodeListToLocalStorage,
 	getNodeListFromLocalStorage,
-	generateId } from '../../utils'
+	generateId,
+	insertNodeToNodeList
+} from '../../utils'
 
 const App: React.FunctionComponent<unknown> = () => {
 	const [nodes, setNodes] = React.useState<NodeListType>([])
@@ -36,15 +38,23 @@ const App: React.FunctionComponent<unknown> = () => {
 		}
 	}
 
-	const appendNewNode = async (idx: number) => {
+	const appendNewNode = async (idx: number, action: 'NewOnEnd' | 'NewBetween') => {
 		const _nodes = [...nodes]
-		_nodes.push({
-			id: generateId(),
-			title: ''
-		})
+		const modifiedNodeList = insertNodeToNodeList(
+			_nodes,
+			{
+				id: generateId(),
+				title: ''
+			},
+			idx,
+		)
 		// We use async function because we need focus on new node after state updated
-		await updateNodes(_nodes)
-		nodeListRef.current.focusOnNode(idx)
+		await updateNodes(modifiedNodeList)
+		if (action === 'NewBetween') {
+			nodeListRef.current.focusOnNode(idx + 1)
+		} else {
+			nodeListRef.current.focusOnNode(idx)
+		}
 	}
 
 	return (

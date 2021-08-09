@@ -5,7 +5,7 @@ import { NodeListType } from '../../interfaces'
 type NodeListProps = {
     data: NodeListType;
 	onChange: (value: string, id: string | number) => void;
-	onAppend: (idx: number, action: 'NewOnEnd' | 'NewBetween') => void;
+	onModify: (idx: number, action: 'NewOnEnd' | 'NewBetween' | 'DeleteNode') => void;
 }
 
 const NodeList = React.forwardRef((props: NodeListProps, ref: React.Ref<any>) => {
@@ -35,11 +35,12 @@ const NodeList = React.forwardRef((props: NodeListProps, ref: React.Ref<any>) =>
 						item={item}
 						index={index}
 						onChange={(v) => props.onChange(v, item.id)}
-						onEnterPress={(idx) => props.onAppend(idx, 'NewBetween')}
+						onEnterPress={(idx) => props.onModify(idx, 'NewBetween')}
+						onDelete={(idx) => props.onModify(idx, 'DeleteNode')}
 					/>
 				</div>
 			))}
-			<span className={'cursor-pointer p-2 text-lg text-gray-700'} onClick={() => props.onAppend(props.data.length, 'NewOnEnd')}>+</span>
+			<span className={'cursor-pointer p-2 text-lg text-gray-700'} onClick={() => props.onModify(props.data.length, 'NewOnEnd')}>+</span>
 		</>
 	)
 })

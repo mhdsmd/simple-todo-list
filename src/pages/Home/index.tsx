@@ -6,7 +6,8 @@ import { modifyNodeWithId,
 	storeNodeListToLocalStorage,
 	getNodeListFromLocalStorage,
 	generateId,
-	insertNodeToNodeList
+	insertNodeToNodeList,
+	deleteNodeFromNodeList
 } from '../../utils'
 
 const App: React.FunctionComponent<unknown> = () => {
@@ -38,22 +39,36 @@ const App: React.FunctionComponent<unknown> = () => {
 		}
 	}
 
-	const appendNewNode = async (idx: number, action: 'NewOnEnd' | 'NewBetween') => {
+	const modifyNode = async (idx: number, action: 'NewOnEnd' | 'NewBetween' | 'DeleteNode') => {
 		const _nodes = [...nodes]
-		const modifiedNodeList = insertNodeToNodeList(
-			_nodes,
-			{
-				id: generateId(),
-				title: ''
-			},
-			idx,
-		)
+		let modifiedNodeList = []
+		if (action === 'NewOnEnd' || action === 'NewBetween') {
+			modifiedNodeList = insertNodeToNodeList(
+				_nodes,
+				{
+					id: generateId(),
+					title: ''
+				},
+				idx,
+			)
+		} else {
+			modifiedNodeList = deleteNodeFromNodeList(_nodes, idx)
+		}
+
 		// We use async function because we need focus on new node after state updated
 		await updateNodes(modifiedNodeList)
+
+		// Change node focus
 		if (action === 'NewBetween') {
 			nodeListRef.current.focusOnNode(idx + 1)
-		} else {
+		} else if (action === 'NewOnEnd') {
 			nodeListRef.current.focusOnNode(idx)
+		} else if (action === 'DeleteNode') {
+			if (idx === 0 && modifiedNodeList.length > 0)
+				nodeListRef.current.focusOnNode(0)
+			else
+				nodeListRef.current.focusOnNode(idx - 1)
+
 		}
 	}
 
@@ -64,7 +79,7 @@ const App: React.FunctionComponent<unknown> = () => {
 					ref={nodeListRef}
 					data={nodes}
 					onChange={handleOnChange}
-					onAppend={appendNewNode}
+					onModify={modifyNode}
 				/>
 			</div>
 		</div>

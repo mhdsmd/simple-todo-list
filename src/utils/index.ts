@@ -54,3 +54,15 @@ export const insertNodeToNodeList = (arr: NodeType[], value: NodeType, idx: numb
 		return result
 	}, [])
 }
+
+export const deleteNodeFromNodeList = (arr: NodeType[], idx: number): NodeType[] => {
+	const _arr = [...arr]
+	return _arr.reduce((result: NodeType[], element: NodeType, index: number) => {
+
+		if (index !== idx) {
+			result.push(element)
+		}
+
+		return result
+	}, [])
+}

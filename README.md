@@ -2,15 +2,16 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-##🔖 Prerequisites
+## 🔖 Prerequisites
 
 [Nodejs 14.15.1](https://nodejs.org/en/blog/release/v14.15.1/)
 
 [yarn 1.22.10](https://www.npmjs.com/package/yarn/v/1.22.10)
-##📦 Install
+
+## 📦 Install
 In the project directory, please run `yarn`.
 
-##🧐 Available Scripts
+## 🧐 Available Scripts
 
 In the project directory, you can run:
 

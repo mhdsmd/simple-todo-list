@@ -2,11 +2,11 @@ import { NodeListType } from '../interfaces'
 
 export const NodeListExample: NodeListType = [
 	{
-		id: '1',
+		id: 'q1yvszfbl',
 		title: 'Node#1'
 	},
 	{
-		id: '2',
+		id: 'v2x1ah5pb',
 		title: 'Node#2'
 	}
 ]

@@ -30,3 +30,7 @@ export const storeNodeListToLocalStorage = (nodeList: NodeListType): boolean => 
 		return false
 	}
 }
+
+export const generateId = (): string => {
+	return Math.random().toString(36).substr(2, 9)
+}

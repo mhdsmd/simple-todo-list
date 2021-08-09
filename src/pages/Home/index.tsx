@@ -14,20 +14,33 @@ const App: React.FunctionComponent<unknown> = () => {
 	const [nodes, setNodes] = React.useState<NodeListType>([])
 	const nodeListRef = React.useRef<any>(null)
 
-	const updateNodes = (nodes: NodeListType) => {
+	const updateNodes = async (nodes: NodeListType, firstLoad?: boolean) => {
 		setNodes(nodes)
 		storeNodeListToLocalStorage(nodes)
+		
+		if (firstLoad) {
+			// Little delay for focus in firstLoad
+			setTimeout(() => {
+				if (Object.keys(nodeListRef))
+					nodeListRef.current.focusOnNode(nodes.length - 1)
+			}, 1)
+		}
 	}
-	// Load application lifeCycle
-	React.useEffect(() => {
+	const initialLoad = async () => {
 		const initialNodes = getNodeListFromLocalStorage()
 		if (initialNodes.length) {
 			// Use cached nodes
-			updateNodes(initialNodes)
+			await updateNodes(initialNodes, true)
 		} else {
 			// Use simple data for first time load
-			updateNodes(NodeListExample)
+			await updateNodes(NodeListExample, true)
 		}
+	}
+	// Load application lifeCycle
+	React.useEffect(() => {
+		initialLoad().then(() => {
+			console.log('Application is ready!')
+		})
 	}, [])
 
 	const handleOnChange = (value: string, id: string | number) => {

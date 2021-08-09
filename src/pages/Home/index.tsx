@@ -9,6 +9,7 @@ import { modifyNodeWithId,
 
 const App: React.FunctionComponent<unknown> = () => {
 	const [nodes, setNodes] = React.useState<NodeListType>([])
+	const nodeListRef = React.useRef<any>(null)
 
 	const updateNodes = (nodes: NodeListType) => {
 		setNodes(nodes)
@@ -35,19 +36,22 @@ const App: React.FunctionComponent<unknown> = () => {
 		}
 	}
 
-	const appendNewNode = () => {
+	const appendNewNode = async () => {
 		const _nodes = [...nodes]
 		_nodes.push({
 			id: generateId(),
 			title: ''
 		})
-		updateNodes(_nodes)
+		// We use async function because we need focus on new node after state updated
+		await updateNodes(_nodes)
+		nodeListRef.current.focusOnNode(_nodes.length - 1)
 	}
 
 	return (
 		<div className={'pt-10'}>
 			<div className={'bg-blue-100 max-w-2xl mx-auto p-8 md:p-12 rounded-lg shadow-xl'}>
 				<NodeList
+					ref={nodeListRef}
 					data={nodes}
 					onChange={handleOnChange}
 					onAppend={appendNewNode}

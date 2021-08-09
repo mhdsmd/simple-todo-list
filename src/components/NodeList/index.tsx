@@ -8,17 +8,37 @@ type NodeListProps = {
 	onAppend: () => void;
 }
 
-const NodeList: React.FunctionComponent<NodeListProps> = (props: NodeListProps) => {
+const NodeList = React.forwardRef((props: NodeListProps, ref: React.Ref<any>) => {
+	const arrLength = props.data.length
+	const elRefs = React.useRef<any>([])
+
+	if (elRefs.current.length !== arrLength) {
+		// add or remove refs
+		elRefs.current = [...new Array(arrLength)].map((_, i) => elRefs.current[i] || React.createRef())
+	}
+
+	// With useImperativeHandle, we have access to the function by ref from outside
+	// ref: https://reactjs.org/docs/hooks-reference.html#useimperativehandle
+	React.useImperativeHandle(ref, () => ({
+		focusOnNode: (index: number) => {
+			elRefs.current[index].current.focus()
+		}
+	}))
+
+
 	return (
 		<>
-			{props.data.map((item) => (
+			{props.data.map((item, index) => (
 				<div key={item.id} className={'p-2'}>
-					<NodeItem item={item} onChange={(v) => props.onChange(v, item.id)} />
+					<NodeItem inputRef={elRefs.current[index]} item={item} onChange={(v) => props.onChange(v, item.id)} />
 				</div>
 			))}
-			<span className={'cursor-pointer p-2 text-lg text-gray-700'} onClick={() => props.onAppend()}>+</span>
+			<span className={'cursor-pointer p-2 text-lg text-gray-700'} onClick={() => {
+				props.onAppend()
+			}}>+</span>
 		</>
 	)
-}
+})
 
 export default NodeList
+export const displayName = NodeList.displayName

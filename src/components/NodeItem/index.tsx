@@ -4,6 +4,7 @@ import { NodeType } from '../../interfaces'
 type NodeItemProps = {
     item: NodeType
 	onChange: (value: string) => void;
+    inputRef: React.LegacyRef<HTMLInputElement> | undefined;
 }
 
 const NodeList: React.FunctionComponent<NodeItemProps> = (props: NodeItemProps) => {
@@ -15,7 +16,7 @@ const NodeList: React.FunctionComponent<NodeItemProps> = (props: NodeItemProps) 
 
 			{/* Node title */}
 			<span className={'text-base w-full'}>
-				<input className={'w-full nodeInput'} value={props.item.title} onChange={e => props.onChange(e.target.value)} />
+				<input ref={props.inputRef} className={'w-full nodeInput'} value={props.item.title} onChange={e => props.onChange(e.target.value)} />
 			</span>
 		</div>
 	)

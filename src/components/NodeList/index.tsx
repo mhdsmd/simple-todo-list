@@ -5,7 +5,7 @@ import { NodeListType } from '../../interfaces'
 type NodeListProps = {
     data: NodeListType;
 	onChange: (value: string, id: string | number) => void;
-	onAppend: () => void;
+	onAppend: (idx: number) => void;
 }
 
 const NodeList = React.forwardRef((props: NodeListProps, ref: React.Ref<any>) => {
@@ -34,7 +34,7 @@ const NodeList = React.forwardRef((props: NodeListProps, ref: React.Ref<any>) =>
 				</div>
 			))}
 			<span className={'cursor-pointer p-2 text-lg text-gray-700'} onClick={() => {
-				props.onAppend()
+				props.onAppend(props.data.length)
 			}}>+</span>
 		</>
 	)

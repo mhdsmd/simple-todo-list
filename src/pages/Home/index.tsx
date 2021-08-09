@@ -36,7 +36,7 @@ const App: React.FunctionComponent<unknown> = () => {
 		}
 	}
 
-	const appendNewNode = async () => {
+	const appendNewNode = async (idx: number) => {
 		const _nodes = [...nodes]
 		_nodes.push({
 			id: generateId(),
@@ -44,7 +44,7 @@ const App: React.FunctionComponent<unknown> = () => {
 		})
 		// We use async function because we need focus on new node after state updated
 		await updateNodes(_nodes)
-		nodeListRef.current.focusOnNode(_nodes.length - 1)
+		nodeListRef.current.focusOnNode(idx)
 	}
 
 	return (

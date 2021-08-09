@@ -26,22 +26,21 @@ const App: React.FunctionComponent<unknown> = () => {
 			}, 1)
 		}
 	}
-	const initialLoad = async () => {
+	const initialLoad = React.useCallback(() => {
 		const initialNodes = getNodeListFromLocalStorage()
 		if (initialNodes.length) {
 			// Use cached nodes
-			await updateNodes(initialNodes, true)
+			updateNodes(initialNodes, true)
 		} else {
 			// Use simple data for first time load
-			await updateNodes(NodeListExample, true)
+			updateNodes(NodeListExample, true)
 		}
-	}
+	}, [])
+
 	// Load application lifeCycle
 	React.useEffect(() => {
-		initialLoad().then(() => {
-			console.log('Application is ready!')
-		})
-	}, [])
+		initialLoad()
+	}, [initialLoad])
 
 	const handleOnChange = (value: string, id: string | number) => {
 		try {

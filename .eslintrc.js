@@ -50,6 +50,7 @@ module.exports = {
 		'@typescript-eslint/camelcase': 0,
 		'@typescript-eslint/explicit-function-return-type': 0,
 		'@typescript-eslint/interface-name-prefix': 0,
-		'no-prototype-builtins': 0
+		'no-prototype-builtins': 0,
+		'@typescript-eslint/no-explicit-any': ['off']
 	},
 }

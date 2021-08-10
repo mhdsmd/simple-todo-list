@@ -15,5 +15,10 @@ export const NodeListExample: NodeListType = [
 		id: 'v2x165pb',
 		title: '🗑 You can use <Ctrl> + <Shift> + <Del> to clear the task!',
 		level: 0,
-	}
+	},
+	{
+		id: 'a23565pb',
+		title: '➖ You can use <Tab>/<Shift> to take advantage of the sub-task feature.',
+		level: 0,
+	},
 ]

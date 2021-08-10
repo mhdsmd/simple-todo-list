@@ -6,6 +6,7 @@ type NodeListProps = {
     data: NodeListType;
 	onChange: (value: string, id: string | number) => void;
 	onModify: (idx: number, action: 'NewOnEnd' | 'NewBetween' | 'DeleteNode') => void;
+	onIndentChange: (idx: number, action: 'Push' | 'Pull') => void;
 }
 
 const NodeList = React.forwardRef((props: NodeListProps, ref: React.Ref<any>) => {
@@ -38,6 +39,8 @@ const NodeList = React.forwardRef((props: NodeListProps, ref: React.Ref<any>) =>
 						onChange={(v) => props.onChange(v, item.id)}
 						onEnterPress={(idx) => props.onModify(idx, 'NewBetween')}
 						onDelete={(idx) => props.onModify(idx, 'DeleteNode')}
+						onTabPress={(idx) => props.onIndentChange(idx, 'Push')}
+						onShiftPress={(idx) => props.onIndentChange(idx, 'Pull')}
 					/>
 				</div>
 			))}

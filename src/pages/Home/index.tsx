@@ -17,7 +17,7 @@ const App: React.FunctionComponent<unknown> = () => {
 	const updateNodes = async (nodes: NodeListType, firstLoad?: boolean) => {
 		setNodes(nodes)
 		storeNodeListToLocalStorage(nodes)
-		
+
 		if (firstLoad) {
 			// Little delay for focus in firstLoad
 			setTimeout(() => {
@@ -59,7 +59,8 @@ const App: React.FunctionComponent<unknown> = () => {
 				_nodes,
 				{
 					id: generateId(),
-					title: ''
+					title: '',
+					level: 0
 				},
 				idx,
 			)
@@ -84,6 +85,21 @@ const App: React.FunctionComponent<unknown> = () => {
 		}
 	}
 
+	const indentChange = async (idx: number, action: 'Push' | 'Pull') => {
+		const _nodes = [...nodes]
+		if (idx > 0) {
+			if (action === 'Push') {
+				const previousLevel = _nodes[idx - 1].level
+				const currentLevel = _nodes[idx].level
+				console.log(currentLevel - previousLevel)
+				if (currentLevel - previousLevel <= 0)
+					_nodes[idx].level = (currentLevel + 1)
+			}
+		}
+		await updateNodes(_nodes)
+		console.log(_nodes)
+	}
+
 	return (
 		<div className={'pt-10'}>
 			<div className={'bg-blue-100 max-w-2xl mx-auto p-8 md:p-12 rounded-lg shadow-xl'}>
@@ -92,6 +108,7 @@ const App: React.FunctionComponent<unknown> = () => {
 					data={nodes}
 					onChange={handleOnChange}
 					onModify={modifyNode}
+					onIndentChange={indentChange}
 				/>
 			</div>
 		</div>

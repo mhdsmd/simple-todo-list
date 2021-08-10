@@ -87,17 +87,33 @@ const App: React.FunctionComponent<unknown> = () => {
 
 	const indentChange = async (idx: number, action: 'Push' | 'Pull') => {
 		const _nodes = [...nodes]
+		// First node cannot push or pull indent
 		if (idx > 0) {
+			const previousLevel = _nodes[idx - 1].level
+			let currentLevel = _nodes[idx].level
 			if (action === 'Push') {
-				const previousLevel = _nodes[idx - 1].level
-				const currentLevel = _nodes[idx].level
-				console.log(currentLevel - previousLevel)
-				if (currentLevel - previousLevel <= 0)
-					_nodes[idx].level = (currentLevel + 1)
+				// Push node indent only if node distance from the previous node is one level
+				if (currentLevel - previousLevel <= 0) {
+					currentLevel += 1
+					_nodes[idx].level = (currentLevel)
+				}
+			}
+			else if (action === 'Pull') {
+				if (currentLevel > 0) {
+					currentLevel -= 1
+					_nodes[idx].level = currentLevel
+					// Check child nodes indent for decrease levels
+					if (_nodes[idx + 1]) {
+						const nextLevel = _nodes[idx + 1].level
+						if (nextLevel >= currentLevel) {
+							// Run recursive function for change all child nodes level
+							await indentChange(idx + 1, 'Pull')
+						}
+					}
+				}
 			}
 		}
 		await updateNodes(_nodes)
-		console.log(_nodes)
 	}
 
 	return (

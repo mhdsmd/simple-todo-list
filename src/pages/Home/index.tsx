@@ -14,15 +14,18 @@ const App: React.FunctionComponent<unknown> = () => {
 	const [nodes, setNodes] = React.useState<NodeListType>([])
 	const nodeListRef = React.useRef<any>(null)
 
-	const updateNodes = async (nodes: NodeListType, firstLoad?: boolean) => {
-		setNodes(nodes)
-		storeNodeListToLocalStorage(nodes)
+	const updateNodes = async (_nodes: NodeListType, firstLoad?: boolean) => {
+		setNodes(_nodes)
+		storeNodeListToLocalStorage(_nodes)
 
+		// I put this to display the data structure
+		console.log(_nodes)
+		
 		if (firstLoad) {
 			// Little delay for focus in firstLoad
 			setTimeout(() => {
 				if (Object.keys(nodeListRef))
-					nodeListRef.current.focusOnNode(nodes.length - 1)
+					nodeListRef.current.focusOnNode(_nodes.length - 1)
 			}, 1)
 		}
 	}
